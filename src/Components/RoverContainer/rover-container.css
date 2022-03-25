@@ -1,0 +1,7 @@
+.main-container {
+  background-color: #FDFEE7;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  min-height: 800px;
+}
