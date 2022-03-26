@@ -1,4 +1,17 @@
 .header {
-  height: 75px;
+  align-items: center;
   background-color: #C3532A;
+  justify-content: flex-start;
+  display: flex;
+  min-height: 36px;
+  padding: 10px;
+}
+
+.home-header {
+  align-items: center;
+  background-color: #C3532A;
+  display: flex;
+  min-height: 37px;
+  padding: 10px;
+  justify-content: center;
 }

@@ -4,4 +4,16 @@
   flex-wrap: wrap;
   flex-direction: row;
   min-height: 800px;
+  justify-content: center;
 }
+
+@media (max-width: 500px) {
+  .main-container {
+    align-items: center;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: center;
+  }
+}
+
+

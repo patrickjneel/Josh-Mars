@@ -1,0 +1,17 @@
+
+.image-top-container {
+  border: 2px solid gray;
+  background-color: #FDFEE7;
+  padding: 10px 15px;
+}
+
+.image-container {
+  padding-top: 15px;
+  background-color: #FDFEE7;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-height: 75vh;
+  /* overflow: scroll; */
+}
