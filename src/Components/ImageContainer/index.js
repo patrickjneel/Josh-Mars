@@ -4,6 +4,7 @@ import DatePicker from "@mui/lab/DatePicker";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import { useLocation } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 
@@ -26,7 +27,7 @@ const ImageContainer = () => {
   //   const getImageData = async () => {
   //     try {
   //       const imageData = await fetch(
-  //         `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
+  //         `https://api.nasa.gov/mars-photos/api/v1/ro/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
   //       );
 
   //       if (!imageData.ok)
@@ -78,7 +79,6 @@ const ImageContainer = () => {
     [currentDate] // leaving off images because landing_date will never change, and make an unnecessary API call
   );
 
-  console.log(errorText);
   return (
     <div>
       <div className="image-top-container">
@@ -88,7 +88,7 @@ const ImageContainer = () => {
         </Typography>
         <Typography align="left">On:</Typography>
         {errorText ? (
-          <Typography align="left" sx={{ fontWeight: "500" }} color="red">
+          <Typography align="left" variant="body2" color="red">
             {errorText}
           </Typography>
         ) : (
@@ -96,7 +96,7 @@ const ImageContainer = () => {
             align="left"
             variant="body2"
             color="text.secondary"
-            sx={{ minHeight: "24px" }}
+            sx={{ minHeight: "20px" }}
           >
             {format(parseISO(dateValue), "MM-dd-yyyy")}
           </Typography>
@@ -130,6 +130,19 @@ const ImageContainer = () => {
         {images && images.length ? (
           images.map((a) => <ImageCard image={a.img_src} />)
         ) : (
+          <div className={error ? "hide" : null}>
+            <img src={NoImage} alt={NoImage} height="50" width="50" />
+            <Typography
+              align="center"
+              variant="h5"
+              color="text.secondary"
+              sx={{ fontWeight: "light" }}
+            >
+              The Rover Was Off That Day. Please Select Another Date.
+            </Typography>
+          </div>
+        )}
+        {error && (
           <div>
             <img src={NoImage} alt={NoImage} height="50" width="50" />
             <Typography
@@ -138,28 +151,29 @@ const ImageContainer = () => {
               color="text.secondary"
               sx={{ fontWeight: "light" }}
             >
-              No Images For This Date Please Select Another Date
+              The Rover Has Run Into An Issue. Please Try Again.
             </Typography>
           </div>
         )}
-        {error && <div>{`There is an issue fetching the data - ${error}`}</div>}
       </div>
-      <Button
-        sx={{
-          borderRadius: 25,
-          height: 60,
-          width: 45,
-          transition: ".2s",
-          position: "fixed",
-          bottom: "1.2rem",
-          right: "1.5rem",
-          zIndex: 15,
-        }}
-        onClick={() => window.scrollTo(0, 0)}
-        variant="contained"
-      >
-        {<img src={Logo} alt={Logo} height="35" width="35" />}
-      </Button>
+      <Tooltip title="Scroll to Top" arrow>
+        <Button
+          sx={{
+            borderRadius: 25,
+            height: 60,
+            width: 45,
+            transition: ".2s",
+            position: "fixed",
+            bottom: "1.2rem",
+            right: "1.5rem",
+            zIndex: 15,
+          }}
+          onClick={() => window.scrollTo(0, 0)}
+          variant="contained"
+        >
+          {<img src={Logo} alt={Logo} height="35" width="35" />}
+        </Button>
+      </Tooltip>
     </div>
   );
 };

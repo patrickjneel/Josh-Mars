@@ -4,7 +4,9 @@
   border-bottom: 2px solid #e7e7e7;
   background-color: #FDFEE7;
   padding: 10px 15px;
-  /* min-height: 185px; */
+  position: sticky;
+  top: 41px;
+  z-index: 100;
 }
 
 .image-container {
@@ -21,4 +23,8 @@
   display: block;
   background-color: #FDFEE7;
   min-height: 75vh;
+}
+
+.hide {
+  display: none;
 }

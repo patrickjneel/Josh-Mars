@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "./rover-container.css";
 import RoverCardInfo from "../RoverCardInfo";
 import { Typography } from "@mui/material";
+import NoImage from "../../assets/no-photo.png";
 
 const RoverContainer = () => {
   const [roverData, setRoverData] = useState([]);
@@ -34,20 +35,35 @@ const RoverContainer = () => {
 
   return (
     <>
+      {error && (
+        <div>
+          <img src={NoImage} alt={NoImage} height="50" width="50" />
+          <Typography
+            align="center"
+            variant="h5"
+            color="text.secondary"
+            sx={{ fontWeight: "light" }}
+          >
+            The Rover Has Run Into An Issue. Please Try Again.
+          </Typography>
+        </div>
+      )}
       {loading ? (
         <div className="loading-container">
           <CircularProgress size={55} color="warning" />
         </div>
       ) : (
         <div className="main-container">
-          <Typography
-            align="center"
-            variant="h3"
-            color="text.secondary"
-            sx={{ fontWeight: "light" }}
-          >
-            Mars Rovers
-          </Typography>
+          {!error ? (
+            <Typography
+              align="center"
+              variant="h3"
+              color="text.secondary"
+              sx={{ fontWeight: "light" }}
+            >
+              Mars Rovers
+            </Typography>
+          ) : null}
           {roverData && roverData.length
             ? roverData.map(
                 ({
@@ -69,9 +85,6 @@ const RoverContainer = () => {
                 )
               )
             : null}
-          {error && (
-            <div>{`There is an issue fetching the data - ${error}`}</div>
-          )}
         </div>
       )}
     </>

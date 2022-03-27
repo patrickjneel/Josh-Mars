@@ -26,13 +26,7 @@ const Header = () => {
           />
         </Tooltip>
       ) : (
-        <img
-          className="josh-logo"
-          height="40px"
-          width="40px"
-          src={Logo}
-          alt="logo"
-        />
+        <img height="40px" width="40px" src={Logo} alt="logo" />
       )}
     </header>
   );

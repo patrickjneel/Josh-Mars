@@ -5,6 +5,9 @@
   display: flex;
   max-height: 36px;
   padding: 5px 10px;
+  position: sticky;
+  z-index: 100;
+  top: 0;
 }
 
   .josh-logo:hover {
