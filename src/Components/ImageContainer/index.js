@@ -55,24 +55,19 @@ const ImageContainer = () => {
     setDateValue(null);
   };
 
-  // add functionality if date selected is before landing date throw error
-  // add functionality if date selected is after currentDate throw error
+  console.log("images", images);
 
   const errorTextHandler = useCallback(
     (selectedValue) => {
-      console.log("dateValue", dateValue);
-      console.log("currentDate", currentDate);
+      const landingDate = images[0].rover.landing_date;
       if (selectedValue > currentDate)
-        setErrorText("Please Select an earlier date");
+        setErrorText(`Please Select an Earlier Date ${currentDate}`);
+      if (selectedValue < landingDate)
+        setErrorText(`Please Select a Date Later Than ${landingDate}`);
       else setErrorText("");
     },
-    [currentDate, dateValue]
+    [currentDate]
   );
-
-  const doSomething = (selectedDate) => {
-    if (selectedDate > currentDate)
-      setErrorText("Please Select an earlier date");
-  };
 
   console.log(errorText);
   return (

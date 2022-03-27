@@ -53,11 +53,13 @@ const RoverCardInfo = ({
           {totalPhotos.toLocaleString("en-US")}
         </Typography>
         <Typography align="left">Cameras:</Typography>
-        {cameras.map(({ full_name }) => (
-          <Typography key={full_name} align="left">
-            {full_name}
-          </Typography>
-        ))}
+        <div className="camera-container">
+          {cameras.map(({ full_name }) => (
+            <Typography key={full_name} align="left" color="text.secondary">
+              {full_name}
+            </Typography>
+          ))}
+        </div>
         <Button
           className="link-button"
           variant="outlined"

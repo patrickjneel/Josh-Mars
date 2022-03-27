@@ -33,39 +33,48 @@ const RoverContainer = () => {
   // }, []);
 
   return (
-    <div className={"main-container"}>
-      <Typography
-        align="center"
-        variant="h3"
-        color="text.secondary"
-        sx={{ fontWeight: "light" }}
-      >
-        Mars Rovers
-      </Typography>
-      {loading && <CircularProgress size={55} color="warning" />}
-      {roverData && roverData.length
-        ? roverData.map(
-            ({
-              name,
-              launch_date,
-              landing_date,
-              total_photos,
-              id,
-              cameras,
-            }) => (
-              <RoverCardInfo
-                key={id}
-                name={name}
-                launchDate={launch_date}
-                landingDate={landing_date}
-                totalPhotos={total_photos}
-                cameras={cameras}
-              />
-            )
-          )
-        : null}
-      {error && <div>{`There is an issue fetching the data - ${error}`}</div>}
-    </div>
+    <>
+      {loading ? (
+        <div className="loading-container">
+          <CircularProgress size={55} color="warning" />
+        </div>
+      ) : (
+        <div className="main-container">
+          <Typography
+            align="center"
+            variant="h3"
+            color="text.secondary"
+            sx={{ fontWeight: "light" }}
+          >
+            Mars Rovers
+          </Typography>
+          {roverData && roverData.length
+            ? roverData.map(
+                ({
+                  name,
+                  launch_date,
+                  landing_date,
+                  total_photos,
+                  id,
+                  cameras,
+                }) => (
+                  <RoverCardInfo
+                    key={id}
+                    name={name}
+                    launchDate={launch_date}
+                    landingDate={landing_date}
+                    totalPhotos={total_photos}
+                    cameras={cameras}
+                  />
+                )
+              )
+            : null}
+          {error && (
+            <div>{`There is an issue fetching the data - ${error}`}</div>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 
