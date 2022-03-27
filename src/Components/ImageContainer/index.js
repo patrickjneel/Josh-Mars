@@ -11,7 +11,7 @@ import { format, parseISO } from "date-fns";
 import ImageCard from "../ImageCard";
 import "./image-container.css";
 import Logo from "../../assets/logo.png";
-import BeachRover from "../../assets/rover4.png";
+import BeachRover from "../../assets/rover5.png";
 import RoverError from "../../assets/roverError.png";
 
 const ImageContainer = () => {
@@ -135,7 +135,7 @@ const ImageContainer = () => {
           images && images.length ? "image-container" : "empty-image-container"
         }
       >
-        {loading && <CircularProgress size={55} color="warning" />}
+        {/* {loading && <CircularProgress size={55} color="warning" />} */}
         {images && images.length ? (
           images.map((a) => <ImageCard image={a.img_src} />)
         ) : (
