@@ -3,19 +3,23 @@
   background-color: #C3532A;
   justify-content: flex-start;
   display: flex;
-  min-height: 36px;
-  padding: 10px;
+  max-height: 36px;
+  padding: 5px 10px;
+}
+
+  .josh-logo:hover {
+  filter: brightness(39%) sepia(100) saturate(113) hue-rotate(78deg);
 }
 
 .home-header {
   align-items: center;
   background-color: #C3532A;
   display: flex;
-  min-height: 37px;
-  padding: 10px;
+  max-height: 37px;
+  padding: 5px 10px;
   justify-content: center;
 }
 
-.josh-logo:hover {
-  filter: brightness(39%) sepia(100) saturate(113) hue-rotate(78deg);
+.home-header:hover {
+  filter: none;
 }

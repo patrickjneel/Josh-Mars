@@ -15,35 +15,35 @@ import NoImage from "../../assets/no-photo.png";
 const ImageContainer = () => {
   const location = useLocation();
   const [images, setImages] = useState([]);
-  const [dateValue, setDateValue] = useState(null);
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+  const [dateValue, setDateValue] = useState(currentDate);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorText, setErrorText] = useState("");
-  const currentDate = format(new Date(), "yyyy-MM-dd");
   const roverName = location.pathname.split("/")[2];
 
-  useEffect(() => {
-    const getImageData = async () => {
-      try {
-        const imageData = await fetch(
-          `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
-        );
+  // useEffect(() => {
+  //   const getImageData = async () => {
+  //     try {
+  //       const imageData = await fetch(
+  //         `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
+  //       );
 
-        if (!imageData.ok)
-          throw new Error(`HTTP error: The status is ${imageData.status}`);
+  //       if (!imageData.ok)
+  //         throw new Error(`HTTP error: The status is ${imageData.status}`);
 
-        const imageJson = await imageData.json();
-        setImages(imageJson.photos);
-        setError(null);
-      } catch (err) {
-        setError(err);
-        setImages(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getImageData();
-  }, []);
+  //       const imageJson = await imageData.json();
+  //       setImages(imageJson.photos);
+  //       setError(null);
+  //     } catch (err) {
+  //       setError(err);
+  //       setImages(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getImageData();
+  // }, []);
 
   const fetchSelectedDay = async () => {
     const imageData = await fetch(
@@ -55,18 +55,27 @@ const ImageContainer = () => {
     setDateValue(null);
   };
 
-  console.log("images", images);
-
   const errorTextHandler = useCallback(
     (selectedValue) => {
-      const landingDate = images[0].rover.landing_date;
+      // const landingDate = images[0].rover.landing_date;
       if (selectedValue > currentDate)
-        setErrorText(`Please Select an Earlier Date ${currentDate}`);
-      if (selectedValue < landingDate)
-        setErrorText(`Please Select a Date Later Than ${landingDate}`);
+        setErrorText(
+          `Please Select a Date Earlier Than ${format(
+            parseISO(currentDate),
+            "MM-dd-yyyy"
+          )}`
+        );
+      // if (selectedValue < landingDate)
+      //   setErrorText(
+      //     `Please Select a Date Later Than ${format(
+      //       parseISO(landingDate),
+      //       "MM-dd-yyyy"
+      //     )}`
+      //   );
       else setErrorText("");
     },
-    [currentDate]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentDate] // leaving off images because landing_date will never change, and make an unnecessary API call
   );
 
   console.log(errorText);
@@ -78,15 +87,19 @@ const ImageContainer = () => {
           {`${roverName.toUpperCase()} Rover`}
         </Typography>
         <Typography align="left">On:</Typography>
-        <Typography align="left" variant="body2" color="text.secondary">
-          {dateValue ? dateValue : currentDate}
-        </Typography>
         {errorText ? (
           <Typography align="left" sx={{ fontWeight: "500" }} color="red">
             {errorText}
           </Typography>
         ) : (
-          <div style={{ minHeight: "24px" }} />
+          <Typography
+            align="left"
+            variant="body2"
+            color="text.secondary"
+            sx={{ minHeight: "24px" }}
+          >
+            {format(parseISO(dateValue), "MM-dd-yyyy")}
+          </Typography>
         )}
         <div className="wrapper" style={{ marginTop: "5px" }}>
           <DatePicker

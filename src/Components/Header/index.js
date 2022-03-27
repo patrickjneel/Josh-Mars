@@ -10,9 +10,9 @@ const Header = () => {
   const location = useLocation();
 
   const navigateHome = () => navigate("/");
-  console.log("location", location);
+
   return (
-    <header className={location.pathName === "/" ? "home-header" : "header"}>
+    <header className={location.pathname === "/" ? "home-header" : "header"}>
       {location.pathname !== "/" ? (
         <Tooltip title="Return to Rovers" arrow>
           <img
@@ -25,7 +25,15 @@ const Header = () => {
             onClick={navigateHome}
           />
         </Tooltip>
-      ) : null}
+      ) : (
+        <img
+          className="josh-logo"
+          height="40px"
+          width="40px"
+          src={Logo}
+          alt="logo"
+        />
+      )}
     </header>
   );
 };
