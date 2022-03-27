@@ -1,12 +1,13 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  debug,
-  waitFor,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import RoverCardInfo from "./index";
+
+const mockNavigateToDetails = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigateToDetails,
+}));
 
 describe("Rover Card Info Tests", () => {
   const roverCardProps = {
@@ -43,17 +44,17 @@ describe("Rover Card Info Tests", () => {
     expect(linkButton).toBeInTheDocument();
   });
 
-  test.skip("should call navigate with correct rover name", () => {
+  test("should call navigate with correct rover name", () => {
     render(
       <Router>
         <RoverCardInfo {...roverCardProps} />
       </Router>
     );
-    const mockNavigate = jest.fn();
-    const linkButton = screen.getByText("Link to Rover Images");
 
+    const linkButton = screen.getByText("Link to Rover Images");
     fireEvent.click(linkButton);
-    expect(mockNavigate).toHaveBeenCalledWith("/rover/spirit");
+    expect(mockNavigateToDetails).toBeCalled();
+    expect(mockNavigateToDetails).toHaveBeenCalledWith("/rover/spirit");
   });
 
   test("should navigate to rover images page when clicked", () => {

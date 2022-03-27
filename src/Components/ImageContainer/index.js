@@ -11,7 +11,8 @@ import { format, parseISO } from "date-fns";
 import ImageCard from "../ImageCard";
 import "./image-container.css";
 import Logo from "../../assets/logo.png";
-import NoImage from "../../assets/no-photo.png";
+import BeachRover from "../../assets/rover4.png";
+import RoverError from "../../assets/roverError.png";
 
 const ImageContainer = () => {
   const location = useLocation();
@@ -47,13 +48,21 @@ const ImageContainer = () => {
   // }, []);
 
   const fetchSelectedDay = async () => {
-    const imageData = await fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${dateValue}&api_key=DEMO_KEY`
-    );
-
-    const imageJson = await imageData.json();
-    setImages(imageJson.photos);
-    setDateValue(null);
+    try {
+      const imageData = await fetch(
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${dateValue}&api_key=DEMO_KEY`
+      );
+      if (!imageData.ok)
+        throw new Error(`HTTP error: The status is ${imageData.status}`);
+      const imageJson = await imageData.json();
+      setImages(imageJson.photos);
+      setDateValue(null);
+    } catch (err) {
+      setError();
+      setImages([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const errorTextHandler = useCallback(
@@ -131,7 +140,7 @@ const ImageContainer = () => {
           images.map((a) => <ImageCard image={a.img_src} />)
         ) : (
           <div className={error ? "hide" : null}>
-            <img src={NoImage} alt={NoImage} height="50" width="50" />
+            <img src={BeachRover} alt={BeachRover} height="180" width="180" />
             <Typography
               align="center"
               variant="h5"
@@ -144,7 +153,7 @@ const ImageContainer = () => {
         )}
         {error && (
           <div>
-            <img src={NoImage} alt={NoImage} height="50" width="50" />
+            <img src={RoverError} alt={RoverError} height="180" width="180" />
             <Typography
               align="center"
               variant="h5"

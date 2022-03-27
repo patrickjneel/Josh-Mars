@@ -55,7 +55,12 @@ const RoverCardInfo = ({
         <Typography align="left">Cameras:</Typography>
         <div className="camera-container">
           {cameras.map(({ full_name }) => (
-            <Typography key={full_name} align="left" color="text.secondary">
+            <Typography
+              key={full_name}
+              align="left"
+              color="text.secondary"
+              variant="caption"
+            >
               {full_name}
             </Typography>
           ))}

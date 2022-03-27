@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "./rover-container.css";
 import RoverCardInfo from "../RoverCardInfo";
 import { Typography } from "@mui/material";
-import NoImage from "../../assets/no-photo.png";
+import RoverError from "../../assets/roverError.png";
 
 const RoverContainer = () => {
   const [roverData, setRoverData] = useState([]);
@@ -36,8 +36,8 @@ const RoverContainer = () => {
   return (
     <>
       {error && (
-        <div>
-          <img src={NoImage} alt={NoImage} height="50" width="50" />
+        <div className="empty-rover-container">
+          <img src={RoverError} alt={RoverError} height="180" width="180" />
           <Typography
             align="center"
             variant="h5"
@@ -53,7 +53,7 @@ const RoverContainer = () => {
           <CircularProgress size={55} color="warning" />
         </div>
       ) : (
-        <div className="main-container">
+        <div className={!error ? "main-container" : "hide"}>
           {!error ? (
             <Typography
               align="center"

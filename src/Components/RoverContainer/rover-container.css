@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  min-height: 800px;
+  min-height: 76vh;
   justify-content: center;
 }
 
@@ -12,7 +12,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 800px;
+  min-height: 94vh;
+}
+
+.empty-rover-container {
+  display: flex;
+  background-color: #FDFEE7;
+  min-height: 94vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
 }
 
 @media (max-width: 500px) {
