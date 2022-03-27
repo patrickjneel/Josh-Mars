@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import "./rover-container.css";
 import RoverCardInfo from "../RoverCardInfo";
+import { Typography } from "@mui/material";
 
 const RoverContainer = () => {
   const [roverData, setRoverData] = useState([]);
@@ -33,7 +34,14 @@ const RoverContainer = () => {
 
   return (
     <div className={"main-container"}>
-      <h3>Mars Rovers</h3>
+      <Typography
+        align="center"
+        variant="h3"
+        color="text.secondary"
+        sx={{ fontWeight: "light" }}
+      >
+        Mars Rovers
+      </Typography>
       {loading && <CircularProgress size={55} color="warning" />}
       {roverData && roverData.length
         ? roverData.map(

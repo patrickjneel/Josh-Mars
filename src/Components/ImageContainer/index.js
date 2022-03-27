@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import DatePicker from "@mui/lab/DatePicker";
 import Button from "@mui/material/Button";
@@ -10,6 +10,7 @@ import { format, parseISO } from "date-fns";
 import ImageCard from "../ImageCard";
 import "./image-container.css";
 import Logo from "../../assets/logo.png";
+import NoImage from "../../assets/no-photo.png";
 
 const ImageContainer = () => {
   const location = useLocation();
@@ -57,6 +58,23 @@ const ImageContainer = () => {
   // add functionality if date selected is before landing date throw error
   // add functionality if date selected is after currentDate throw error
 
+  const errorTextHandler = useCallback(
+    (selectedValue) => {
+      console.log("dateValue", dateValue);
+      console.log("currentDate", currentDate);
+      if (selectedValue > currentDate)
+        setErrorText("Please Select an earlier date");
+      else setErrorText("");
+    },
+    [currentDate, dateValue]
+  );
+
+  const doSomething = (selectedDate) => {
+    if (selectedDate > currentDate)
+      setErrorText("Please Select an earlier date");
+  };
+
+  console.log(errorText);
   return (
     <div>
       <div className="image-top-container">
@@ -68,12 +86,20 @@ const ImageContainer = () => {
         <Typography align="left" variant="body2" color="text.secondary">
           {dateValue ? dateValue : currentDate}
         </Typography>
-        <div className="wrapper">
+        {errorText ? (
+          <Typography align="left" sx={{ fontWeight: "500" }} color="red">
+            {errorText}
+          </Typography>
+        ) : (
+          <div style={{ minHeight: "24px" }} />
+        )}
+        <div className="wrapper" style={{ marginTop: "5px" }}>
           <DatePicker
             label="Select Date"
             value={parseISO(dateValue)}
             onChange={(newValue) => {
               setDateValue(format(newValue, "yyyy-MM-dd"));
+              errorTextHandler(format(newValue, "yyyy-MM-dd"));
             }}
             renderInput={(params) => <TextField size="small" {...params} />}
           />
@@ -81,25 +107,34 @@ const ImageContainer = () => {
             sx={{ height: 40, marginLeft: "15px" }}
             variant="outlined"
             onClick={fetchSelectedDay}
-            disabled
+            disabled={errorText !== ""}
           >
             Submit
           </Button>
         </div>
       </div>
-      <div className="image-container">
+      <div
+        className={
+          images && images.length ? "image-container" : "empty-image-container"
+        }
+      >
         {loading && <CircularProgress size={55} color="warning" />}
-        {images && images.length
-          ? images.map((a) => <ImageCard image={a.img_src} />)
-          : null}
-        {error && (
+        {images && images.length ? (
+          images.map((a) => <ImageCard image={a.img_src} />)
+        ) : (
           <div>
-            <Typography align="center">
+            <img src={NoImage} alt={NoImage} height="50" width="50" />
+            <Typography
+              align="center"
+              variant="h5"
+              color="text.secondary"
+              sx={{ fontWeight: "light" }}
+            >
               No Images For This Date Please Select Another Date
             </Typography>
-            <div>{`There is an issue fetching the data - ${error}`}</div>
           </div>
         )}
+        {error && <div>{`There is an issue fetching the data - ${error}`}</div>}
       </div>
       <Button
         sx={{
