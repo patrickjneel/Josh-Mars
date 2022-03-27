@@ -16,6 +16,7 @@ const Header = () => {
       {location.pathname !== "/" ? (
         <Tooltip title="Return to Rovers" arrow>
           <img
+            className="josh-logo"
             style={{ cursor: "pointer" }}
             height="36px"
             width="36px"
@@ -24,9 +25,7 @@ const Header = () => {
             onClick={navigateHome}
           />
         </Tooltip>
-      ) : (
-        <img height="36px" width="36px" src={Logo} alt="logo" />
-      )}
+      ) : null}
     </div>
   );
 };

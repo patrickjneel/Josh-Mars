@@ -1,6 +1,7 @@
 
 .image-top-container {
-  border: 2px solid gray;
+  box-shadow: 0px 6px 12px #e7e7e7e7;
+  border: 1px solid #e7e7e7;
   background-color: #FDFEE7;
   padding: 10px 15px;
 }

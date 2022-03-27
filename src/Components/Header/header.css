@@ -15,3 +15,7 @@
   padding: 10px;
   justify-content: center;
 }
+
+.josh-logo:hover {
+  filter: brightness(39%) sepia(100) saturate(113) hue-rotate(78deg);
+}

@@ -7,6 +7,14 @@
   justify-content: center;
 }
 
+.loading-container {
+  background-color: #FDFEE7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 800px;
+}
+
 @media (max-width: 500px) {
   .main-container {
     align-items: center;

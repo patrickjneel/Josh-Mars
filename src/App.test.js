@@ -1,8 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("App Tests", () => {
+  test("should render rover page by default", () => {
+    render(
+      <Router>
+        <App />
+      </Router>
+    );
+    const roverPage = screen.getByText("Mars Rovers");
+    expect(roverPage).toBeInTheDocument();
+  });
 });

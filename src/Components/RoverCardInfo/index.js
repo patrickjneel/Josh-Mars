@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { string, number } from "prop-types";
+import { string, number, arrayOf, objectOf } from "prop-types";
 
 import Mars from "../../assets/mars.jpeg";
 import "./rover-card-info.css";
@@ -19,9 +19,9 @@ const RoverCardInfo = ({
 }) => {
   const navigate = useNavigate();
 
-  const navigateToDetails = (name) => {
+  function navigateToDetails(name) {
     navigate(`/rover/${name}`);
-  };
+  }
 
   return (
     <Card sx={{ maxWidth: 345 }} className="card">
@@ -52,12 +52,18 @@ const RoverCardInfo = ({
         <Typography align="left" variant="body2" color="text.secondary">
           {totalPhotos.toLocaleString("en-US")}
         </Typography>
+        <Typography align="left">Cameras:</Typography>
+        {cameras.map(({ full_name }) => (
+          <Typography key={full_name} align="left">
+            {full_name}
+          </Typography>
+        ))}
         <Button
           className="link-button"
           variant="outlined"
           onClick={() => navigateToDetails(name.toLowerCase())}
         >
-          {`Link to Rover Images`}
+          Link to Rover Images
         </Button>
       </CardContent>
     </Card>
@@ -69,7 +75,7 @@ RoverCardInfo.propTypes = {
   launchDate: string,
   landingDate: string,
   totalPhotos: number,
-  cameras: [],
+  cameras: arrayOf(objectOf(string)),
 };
 
 export default RoverCardInfo;
