@@ -5,7 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import Popover from "@mui/material/Popover";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { string, number, array } from "prop-types";
 import { nanoid } from "nanoid";
@@ -21,22 +22,26 @@ const RoverCardInfo = ({
   cameras,
 }) => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const navigateToDetails = (name) => {
     navigate(`/rover/${name}`);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const boxStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+    backgroundColor: "white",
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   return (
     <Card sx={{ maxWidth: 345 }} className="card">
@@ -81,36 +86,31 @@ const RoverCardInfo = ({
             </Typography>
           </Grid>
           <Grid item xs={6} md={8} key={nanoid()}>
-            <Button
-              aria-describedby={id}
-              variant="contained"
-              onClick={handleClick}
-            >
+            <Button variant="contained" onClick={handleOpen}>
               Cameras
             </Button>
-            <Popover
-              id={id}
+            <Modal
               open={open}
-              anchorEl={anchorEl}
               onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
+              aria-labelledby="modal-camera-names"
+              aria-describedby="modal-modal-description"
             >
-              <Typography sx={{ p: 2 }}>
+              <Box style={boxStyle}>
+                <Typography
+                  id="modal-camera-names"
+                  variant="h6"
+                  component="h2"
+                  sx={{ fontWeight: 500, padding: "5px" }}
+                >
+                  {`Cameras for ${name} rover`}
+                </Typography>
                 {cameras.map(({ full_name }) => (
-                  <Typography
-                    key={nanoid()}
-                    align="left"
-                    color="text.secondary"
-                    variant="caption"
-                  >
+                  <Typography key={nanoid()} sx={{ padding: "5px" }}>
                     {full_name},
                   </Typography>
                 ))}
-              </Typography>
-            </Popover>
+              </Box>
+            </Modal>
           </Grid>
         </Grid>
         <Button
