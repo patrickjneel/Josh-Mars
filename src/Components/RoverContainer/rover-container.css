@@ -7,11 +7,6 @@
   justify-content: center;
 }
 
-
-div.card:last-child {
-  justify-content: flex-start;
-}
-
 .loading-container {
   background-color: #FDFEE7;
   display: flex;
