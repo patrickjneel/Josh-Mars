@@ -8,8 +8,3 @@
   justify-content: flex-start;
   flex-direction: column;
 }
-
-.camera-container {
-  max-height: 75px;
-  overflow: scroll;
-}

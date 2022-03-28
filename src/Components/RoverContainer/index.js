@@ -11,31 +11,31 @@ const RoverContainer = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const getRoverData = async () => {
-  //     try {
-  //       const roverData = await fetch(
-  //         "https://api.nasa.gov/mars-photos/api/v1/rovers/?api_key=DEMO_KEY"
-  //       );
-  //       if (!roverData.ok) {
-  //         throw new Error(`HTTP error: The status is ${roverData.status}`);
-  //       }
-  //       const roverJson = await roverData.json();
+  useEffect(() => {
+    const getRoverData = async () => {
+      try {
+        const roverData = await fetch(
+          "https://api.nasa.gov/mars-photos/api/v1/rovers/?api_key=DEMO_KEY"
+        );
+        if (!roverData.ok) {
+          throw new Error(`HTTP error: The status is ${roverData.status}`);
+        }
+        const roverJson = await roverData.json();
 
-  //       setRoverData(roverJson.rovers);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       setRoverData(null);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   getRoverData();
-  // }, []);
+        setRoverData(roverJson.rovers);
+      } catch (err) {
+        setError(err.message);
+        setRoverData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getRoverData();
+  }, []);
 
   return (
     <>
-      {error && (
+      {error ? (
         <div className="empty-rover-container">
           <img src={RoverError} alt={RoverError} height="180" width="180" />
           <Typography
@@ -47,6 +47,17 @@ const RoverContainer = () => {
             The Rover Has Run Into An Issue. Please Try Again.
           </Typography>
         </div>
+      ) : (
+        <div style={{ backgroundColor: "#FDFEE7" }}>
+          <Typography
+            align="center"
+            variant="h3"
+            color="text.secondary"
+            sx={{ fontWeight: "light" }}
+          >
+            Mars Rovers
+          </Typography>
+        </div>
       )}
       {loading ? (
         <div className="loading-container">
@@ -54,16 +65,6 @@ const RoverContainer = () => {
         </div>
       ) : (
         <div className={!error ? "main-container" : "hide"}>
-          {!error ? (
-            <Typography
-              align="center"
-              variant="h3"
-              color="text.secondary"
-              sx={{ fontWeight: "light" }}
-            >
-              Mars Rovers
-            </Typography>
-          ) : null}
           {roverData && roverData.length
             ? roverData.map(
                 ({
