@@ -16,6 +16,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   min-height: 75vh;
+  justify-content: center;
 }
 
 .empty-image-container {
@@ -29,10 +30,4 @@
 
 .hide {
   display: none;
-}
-
-@media (max-width: 500px) {
-  .image-container {
-    justify-content: center;
-  }
 }
