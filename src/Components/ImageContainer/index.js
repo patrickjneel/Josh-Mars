@@ -50,7 +50,9 @@ const ImageContainer = () => {
   const fetchSelectedDay = async () => {
     try {
       const imageData = await fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${dateValue}&api_key=DEMO_KEY`
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${parseISO(
+          dateValue
+        )}&api_key=DEMO_KEY`
       );
       if (!imageData.ok)
         throw new Error(`HTTP error: The status is ${imageData.status}`);
@@ -59,31 +61,36 @@ const ImageContainer = () => {
       setDateValue(null);
     } catch (err) {
       setError();
-      setImages([]);
+      setImages(null);
     } finally {
       setLoading(false);
     }
   };
 
+  const landingDateObj = {
+    spirit: "2002-12-3",
+    curiosity: "2002-12-3",
+    perseverance: "2002-12-3",
+    other: "2002-12-3",
+  };
+
   const errorTextHandler = useCallback(
     (selectedValue) => {
-      // const landingDate =
-      //   images && images.length ? images[0].rover.landing_date : "";
-      if (selectedValue > currentDate)
+      if (selectedValue > currentDate) {
         setErrorText(
           `Please Select a Date Earlier Than ${format(
             parseISO(currentDate),
             "MM-dd-yyyy"
           )}`
         );
-      // if (selectedValue < landingDate)
-      //   setErrorText(
-      //     `Please Select a Date Later Than ${format(
-      //       parseISO(landingDate),
-      //       "MM-dd-yyyy"
-      //     )}`
-      //   );
-      else setErrorText("");
+      } else if (selectedValue < landingDateObj[roverName]) {
+        setErrorText(
+          `Please Select a Date Later Than ${format(
+            new Date(landingDateObj[roverName]),
+            "MM-dd-yyyy"
+          )}`
+        );
+      } else setErrorText("");
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentDate] // leaving off images because landing_date will never change, and make an unnecessary API call

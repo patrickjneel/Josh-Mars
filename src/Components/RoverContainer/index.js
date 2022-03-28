@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import "./rover-container.css";
 import RoverCardInfo from "../RoverCardInfo";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import RoverError from "../../assets/roverError.png";
 
 const RoverContainer = () => {
@@ -65,27 +65,35 @@ const RoverContainer = () => {
         </div>
       ) : (
         <div className={!error ? "main-container" : "hide"}>
-          {roverData && roverData.length
-            ? roverData.map(
-                ({
-                  name,
-                  launch_date,
-                  landing_date,
-                  total_photos,
-                  id,
-                  cameras,
-                }) => (
-                  <RoverCardInfo
-                    key={id}
-                    name={name}
-                    launchDate={launch_date}
-                    landingDate={landing_date}
-                    totalPhotos={total_photos}
-                    cameras={cameras}
-                  />
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            {roverData && roverData.length
+              ? roverData.map(
+                  ({
+                    name,
+                    launch_date,
+                    landing_date,
+                    total_photos,
+                    id,
+                    cameras,
+                  }) => (
+                    <Grid item xs={12} sm={6} md={4}>
+                      <RoverCardInfo
+                        key={id}
+                        name={name}
+                        launchDate={launch_date}
+                        landingDate={landing_date}
+                        totalPhotos={total_photos}
+                        cameras={cameras}
+                      />
+                    </Grid>
+                  )
                 )
-              )
-            : null}
+              : null}
+          </Grid>
         </div>
       )}
     </>
