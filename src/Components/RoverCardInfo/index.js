@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Popover from "@mui/material/Popover";
 import { useNavigate } from "react-router-dom";
-import { string, number, arrayOf, objectOf } from "prop-types";
+import { string, number, array } from "prop-types";
+import { nanoid } from "nanoid";
 
 import Mars from "../../assets/mars.jpeg";
 import "./rover-card-info.css";
@@ -41,53 +42,51 @@ const RoverCardInfo = ({
     <Card sx={{ maxWidth: 345 }} className="card">
       <CardMedia
         component="img"
-        height="150"
+        height="100"
         image={Mars}
         alt={`${name}-rover`}
       />
       <CardContent>
         <Typography
-          align="left"
-          sx={{ fontSize: 20 }}
+          align="center"
+          sx={{
+            fontSize: 20,
+            borderBottom: "1px solid black",
+            paddingBottom: "5px",
+          }}
           gutterBottom
           component="div"
         >
           {name}
         </Typography>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} sx={{ alignItems: "center" }}>
           <Grid item xs={6} md={4}>
-            <Typography align="left" sx={{ color: "black", fontSize: "15px" }}>
+            <Typography align="left" sx={{ fontSize: "15px" }}>
               Landing Date:
             </Typography>
             <Typography align="left" variant="body2" color="text.secondary">
               {new Date(landingDate).toDateString()}
-              <Typography
-                align="left"
-                sx={{ color: "black", fontSize: "15px" }}
-              >
-                Launch Date:
-              </Typography>
-              <Typography align="left" variant="body2" color="text.secondary">
-                {new Date(launchDate).toDateString()}
-              </Typography>
-              <Typography
-                align="left"
-                sx={{ color: "black", fontSize: "15px" }}
-              >
-                Total Photos:
-              </Typography>
-              <Typography align="left" variant="body2" color="text.secondary">
-                {totalPhotos.toLocaleString("en-US")}
-              </Typography>
+            </Typography>
+            <Typography align="left" sx={{ fontSize: "15px" }}>
+              Launch Date:
+            </Typography>
+            <Typography align="left" variant="body2" color="text.secondary">
+              {new Date(launchDate).toDateString()}
+            </Typography>
+            <Typography align="left" sx={{ fontSize: "15px" }}>
+              Total Photos:
+            </Typography>
+            <Typography align="left" variant="body2" color="text.secondary">
+              {totalPhotos.toLocaleString("en-US")}
             </Typography>
           </Grid>
-          <Grid item xs={6} md={8}>
+          <Grid item xs={6} md={8} key={nanoid()}>
             <Button
               aria-describedby={id}
               variant="contained"
               onClick={handleClick}
             >
-              Rover Cameras
+              Cameras
             </Button>
             <Popover
               id={id}
@@ -102,7 +101,7 @@ const RoverCardInfo = ({
               <Typography sx={{ p: 2 }}>
                 {cameras.map(({ full_name }) => (
                   <Typography
-                    key={full_name}
+                    key={nanoid()}
                     align="left"
                     color="text.secondary"
                     variant="caption"
@@ -118,6 +117,7 @@ const RoverCardInfo = ({
           className="link-button"
           variant="outlined"
           onClick={() => navigateToDetails(name.toLowerCase())}
+          sx={{ marginTop: "15px" }}
         >
           Link to Rover Images
         </Button>
@@ -131,7 +131,7 @@ RoverCardInfo.propTypes = {
   launchDate: string,
   landingDate: string,
   totalPhotos: number,
-  cameras: arrayOf(objectOf(string)),
+  cameras: array,
 };
 
 export default RoverCardInfo;

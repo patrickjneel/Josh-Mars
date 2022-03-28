@@ -80,7 +80,7 @@ const RoverContainer = () => {
                     id,
                     cameras,
                   }) => (
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} key={id}>
                       <RoverCardInfo
                         key={id}
                         name={name}

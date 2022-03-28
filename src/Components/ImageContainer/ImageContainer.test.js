@@ -18,7 +18,7 @@ describe("Image Container Tests", () => {
     const roverName = screen.getByText("SPIRIT Rover");
     const datePicker = screen.getByLabelText("Select Date");
     const submitBtn = screen.getByText("Submit");
-    const currentDate = screen.getByText(format(new Date(), "MM-dd-yyyy"));
+    const currentDate = screen.getByText(format(new Date(), "yyyy-MM-dd"));
 
     expect(roverName).toBeInTheDocument();
     expect(datePicker).toBeInTheDocument();

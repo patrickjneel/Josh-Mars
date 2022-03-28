@@ -48,7 +48,6 @@ const ImageContainer = () => {
   }, []);
 
   const fetchSelectedDay = async () => {
-    console.log(dateValue);
     try {
       const imageData = await fetch(
         `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${dateValue}&api_key=DEMO_KEY`
@@ -148,7 +147,7 @@ const ImageContainer = () => {
       >
         {loading && <CircularProgress size={55} color="warning" />}
         {images && images.length ? (
-          images.map((a) => <ImageCard image={a.img_src} key={a.img_src} />)
+          images.map((a, index) => <ImageCard image={a.img_src} key={index} />)
         ) : (
           <div className={error ? "hide" : null}>
             <img src={BeachRover} alt={BeachRover} height="180" width="180" />
