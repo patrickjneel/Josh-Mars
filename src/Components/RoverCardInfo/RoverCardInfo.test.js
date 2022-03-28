@@ -31,7 +31,7 @@ describe("Rover Card Info Tests", () => {
     const launchDate = screen.getByText("Tue Dec 02 2003");
     const landingDate = screen.getByText("Fri Dec 10 2004");
     const totalPhotos = screen.getByText("10,000");
-    const cameraPopOver = screen.getByText("Rover Cameras");
+    const cameraPopOver = screen.getByText("Cameras");
     const linkButton = screen.getByText("Link to Rover Images");
 
     expect(name).toBeInTheDocument();
@@ -42,13 +42,13 @@ describe("Rover Card Info Tests", () => {
     expect(linkButton).toBeInTheDocument();
   });
 
-  test("should display rover cameras after clicking Rover Cameras popover", () => {
+  test("should display rover cameras after clicking Cameras buttons", () => {
     render(
       <Router>
         <RoverCardInfo {...roverCardProps} />
       </Router>
     );
-    const cameraPopOverBtn = screen.getByText("Rover Cameras");
+    const cameraPopOverBtn = screen.getByText("Cameras");
     expect(screen.queryByText("Front Hazard Avoidance Camera")).toBeFalsy();
     expect(screen.queryByText("Mast Camera")).toBeFalsy();
     fireEvent.click(cameraPopOverBtn);
