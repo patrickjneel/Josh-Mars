@@ -28,7 +28,7 @@ const ImageContainer = () => {
   //   const getImageData = async () => {
   //     try {
   //       const imageData = await fetch(
-  //         `https://api.nasa.gov/mars-photos/api/v1/ro/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
+  //         `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
   //       );
 
   //       if (!imageData.ok)
@@ -67,7 +67,8 @@ const ImageContainer = () => {
 
   const errorTextHandler = useCallback(
     (selectedValue) => {
-      // const landingDate = images[0].rover.landing_date;
+      // const landingDate =
+      //   images && images.length ? images[0].rover.landing_date : "";
       if (selectedValue > currentDate)
         setErrorText(
           `Please Select a Date Earlier Than ${format(
@@ -135,7 +136,7 @@ const ImageContainer = () => {
           images && images.length ? "image-container" : "empty-image-container"
         }
       >
-        {/* {loading && <CircularProgress size={55} color="warning" />} */}
+        {loading && <CircularProgress size={55} color="warning" />}
         {images && images.length ? (
           images.map((a) => <ImageCard image={a.img_src} />)
         ) : (

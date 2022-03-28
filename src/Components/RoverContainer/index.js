@@ -11,27 +11,27 @@ const RoverContainer = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const getRoverData = async () => {
-      try {
-        const roverData = await fetch(
-          "https://api.nasa.gov/mars-photos/api/v1/rovers/?api_key=DEMO_KEY"
-        );
-        if (!roverData.ok) {
-          throw new Error(`HTTP error: The status is ${roverData.status}`);
-        }
-        const roverJson = await roverData.json();
+  // useEffect(() => {
+  //   const getRoverData = async () => {
+  //     try {
+  //       const roverData = await fetch(
+  //         "https://api.nasa.gov/mars-photos/api/v1/rovers/?api_key=DEMO_KEY"
+  //       );
+  //       if (!roverData.ok) {
+  //         throw new Error(`HTTP error: The status is ${roverData.status}`);
+  //       }
+  //       const roverJson = await roverData.json();
 
-        setRoverData(roverJson.rovers);
-      } catch (err) {
-        setError(err.message);
-        setRoverData(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getRoverData();
-  }, []);
+  //       setRoverData(roverJson.rovers);
+  //     } catch (err) {
+  //       setError(err.message);
+  //       setRoverData(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getRoverData();
+  // }, []);
 
   return (
     <>
