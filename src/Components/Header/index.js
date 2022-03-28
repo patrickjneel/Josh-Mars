@@ -17,6 +17,7 @@ const Header = () => {
         <Tooltip title="Return to Rovers" arrow>
           <img
             className="josh-logo"
+            data-testid="josh-logo"
             style={{ cursor: "pointer" }}
             height="36px"
             width="36px"

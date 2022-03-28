@@ -31,17 +31,35 @@ describe("Rover Card Info Tests", () => {
     const launchDate = screen.getByText("Tue Dec 02 2003");
     const landingDate = screen.getByText("Fri Dec 10 2004");
     const totalPhotos = screen.getByText("10,000");
-    const camera1 = screen.getByText("Front Hazard Avoidance Camera");
-    const camera2 = screen.getByText("Mast Camera");
+    const cameraPopOver = screen.getByText("Rover Cameras");
     const linkButton = screen.getByText("Link to Rover Images");
 
     expect(name).toBeInTheDocument();
     expect(launchDate).toBeInTheDocument();
     expect(landingDate).toBeInTheDocument();
     expect(totalPhotos).toBeInTheDocument();
-    expect(camera1).toBeInTheDocument();
-    expect(camera2).toBeInTheDocument();
+    expect(cameraPopOver).toBeInTheDocument();
     expect(linkButton).toBeInTheDocument();
+  });
+
+  test("should display rover cameras after clicking Rover Cameras popover", () => {
+    render(
+      <Router>
+        <RoverCardInfo {...roverCardProps} />
+      </Router>
+    );
+    const cameraPopOverBtn = screen.getByText("Rover Cameras");
+    expect(screen.queryByText("Front Hazard Avoidance Camera")).toBeFalsy();
+    expect(screen.queryByText("Mast Camera")).toBeFalsy();
+    fireEvent.click(cameraPopOverBtn);
+    waitFor(() => {
+      expect(
+        screen.getByText("Front Hazard Avoidance Camera")
+      ).toBeInTheDocument();
+    });
+    waitFor(() => {
+      expect(screen.getByText("Mast Camera")).toBeInTheDocument();
+    });
   });
 
   test("should call navigate with correct rover name", () => {

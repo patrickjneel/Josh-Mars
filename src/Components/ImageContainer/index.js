@@ -123,6 +123,7 @@ const ImageContainer = () => {
         )}
         <div className="wrapper" style={{ marginTop: "5px" }}>
           <DatePicker
+            data-testid="datePicker"
             label="Select Date"
             value={parseISO(dateValue)}
             onChange={(newValue) => {
