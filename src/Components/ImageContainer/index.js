@@ -24,35 +24,34 @@ const ImageContainer = () => {
   const [errorText, setErrorText] = useState("");
   const roverName = location.pathname.split("/")[2];
 
-  // useEffect(() => {
-  //   const getImageData = async () => {
-  //     try {
-  //       const imageData = await fetch(
-  //         `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
-  //       );
+  useEffect(() => {
+    const getImageData = async () => {
+      try {
+        const imageData = await fetch(
+          `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${currentDate}&api_key=DEMO_KEY`
+        );
 
-  //       if (!imageData.ok)
-  //         throw new Error(`HTTP error: The status is ${imageData.status}`);
+        if (!imageData.ok)
+          throw new Error(`HTTP error: The status is ${imageData.status}`);
 
-  //       const imageJson = await imageData.json();
-  //       setImages(imageJson.photos);
-  //       setError(null);
-  //     } catch (err) {
-  //       setError(err);
-  //       setImages(null);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   getImageData();
-  // }, []);
+        const imageJson = await imageData.json();
+        setImages(imageJson.photos);
+        setError(null);
+      } catch (err) {
+        setError(err);
+        setImages(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getImageData();
+  }, []);
 
   const fetchSelectedDay = async () => {
+    console.log(dateValue);
     try {
       const imageData = await fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${parseISO(
-          dateValue
-        )}&api_key=DEMO_KEY`
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?earth_date=${dateValue}&api_key=DEMO_KEY`
       );
       if (!imageData.ok)
         throw new Error(`HTTP error: The status is ${imageData.status}`);
@@ -69,10 +68,10 @@ const ImageContainer = () => {
 
   const landingDateObj = useMemo(
     () => ({
-      spirit: "2002-12-3",
-      curiosity: "2002-12-3",
-      perseverance: "2002-12-3",
-      other: "2002-12-3",
+      spirit: "2004-01-03",
+      curiosity: "2012-08-05",
+      perseverance: "2021-02-17",
+      opportunity: "2004-01-24",
     }),
     []
   );
@@ -118,7 +117,7 @@ const ImageContainer = () => {
             color="text.secondary"
             sx={{ minHeight: "20px" }}
           >
-            {format(parseISO(dateValue), "MM-dd-yyyy")}
+            {dateValue || currentDate}
           </Typography>
         )}
         <div className="wrapper" style={{ marginTop: "5px" }}>
@@ -136,8 +135,7 @@ const ImageContainer = () => {
             sx={{ height: 40, marginLeft: "15px" }}
             variant="outlined"
             onClick={fetchSelectedDay}
-            // disabled={errorText !== ""}
-            disabled
+            disabled={errorText !== ""}
           >
             Submit
           </Button>
@@ -150,7 +148,7 @@ const ImageContainer = () => {
       >
         {loading && <CircularProgress size={55} color="warning" />}
         {images && images.length ? (
-          images.map((a) => <ImageCard image={a.img_src} />)
+          images.map((a) => <ImageCard image={a.img_src} key={a.img_src} />)
         ) : (
           <div className={error ? "hide" : null}>
             <img src={BeachRover} alt={BeachRover} height="180" width="180" />

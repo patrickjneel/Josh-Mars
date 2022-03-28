@@ -15,7 +15,7 @@ const RoverContainer = () => {
     const getRoverData = async () => {
       try {
         const roverData = await fetch(
-          "https://api.nasa.gov/mars-photos/api/v1/rov/?api_key=DEMO_KEY"
+          "https://api.nasa.gov/mars-photos/api/v1/rovers/?api_key=DEMO_KEY"
         );
         if (!roverData.ok) {
           throw new Error(`HTTP error: The status is ${roverData.status}`);
@@ -68,7 +68,7 @@ const RoverContainer = () => {
           <Grid
             container
             rowSpacing={2}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            columnSpacing={{ xs: 1, sm: 2, md: 2 }}
           >
             {roverData && roverData.length
               ? roverData.map(
