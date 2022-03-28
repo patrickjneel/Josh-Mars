@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import TextField from "@mui/material/TextField";
 import DatePicker from "@mui/lab/DatePicker";
 import Button from "@mui/material/Button";
@@ -67,12 +67,15 @@ const ImageContainer = () => {
     }
   };
 
-  const landingDateObj = {
-    spirit: "2002-12-3",
-    curiosity: "2002-12-3",
-    perseverance: "2002-12-3",
-    other: "2002-12-3",
-  };
+  const landingDateObj = useMemo(
+    () => ({
+      spirit: "2002-12-3",
+      curiosity: "2002-12-3",
+      perseverance: "2002-12-3",
+      other: "2002-12-3",
+    }),
+    []
+  );
 
   const errorTextHandler = useCallback(
     (selectedValue) => {
@@ -92,8 +95,8 @@ const ImageContainer = () => {
         );
       } else setErrorText("");
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentDate] // leaving off images because landing_date will never change, and make an unnecessary API call
+
+    [currentDate, landingDateObj, roverName]
   );
 
   return (
@@ -132,7 +135,8 @@ const ImageContainer = () => {
             sx={{ height: 40, marginLeft: "15px" }}
             variant="outlined"
             onClick={fetchSelectedDay}
-            disabled={errorText !== ""}
+            // disabled={errorText !== ""}
+            disabled
           >
             Submit
           </Button>
