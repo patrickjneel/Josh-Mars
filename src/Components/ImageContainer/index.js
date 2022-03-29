@@ -45,7 +45,8 @@ const ImageContainer = () => {
       }
     };
     getImageData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // leaving roverName and currentDate as it should only make the request once when it loads with that current date and rover name
 
   const fetchSelectedDay = async () => {
     try {
