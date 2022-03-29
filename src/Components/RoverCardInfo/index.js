@@ -102,7 +102,7 @@ const RoverCardInfo = ({
                   component="h2"
                   sx={{ fontWeight: 500, padding: "5px" }}
                 >
-                  {`Cameras for ${name} rover`}
+                  {`Cameras For ${name} Rover`}
                 </Typography>
                 {cameras.map(({ full_name }) => (
                   <Typography key={nanoid()} sx={{ padding: "5px" }}>

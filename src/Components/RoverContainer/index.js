@@ -65,11 +65,7 @@ const RoverContainer = () => {
         </div>
       ) : (
         <div className={!error ? "main-container" : "hide"}>
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-          >
+          <Grid container>
             {roverData && roverData.length
               ? roverData.map(
                   ({
